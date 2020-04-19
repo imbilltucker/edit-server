@@ -3,12 +3,8 @@ import logging
 import html2text
 import re
 import cgi
-try:
-	# py3
-	from urllib.parse import urlparse
-except ImportError:
-	# py2
-	from urlparse import urlparse
+from urllib.parse import urlparse
+
 
 class GmailFilter(object):
 	logger = logging.getLogger(__name__ + '.GmailFilter')
@@ -85,7 +81,7 @@ class GmailCodec(object):
 		('\n', '<br>'),
 	]
 
-	def _replace(self, content, replacement_pairs):
+	def replace(self, content, replacement_pairs):
 		for before, after in replacement_pairs:
 			if not before: continue
 			# self.logger.debug("** Replacing %r -> %r", before, after)

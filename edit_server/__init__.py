@@ -30,16 +30,9 @@ import threading
 import logging
 from optparse import OptionParser
 
-try:
-	# py3
-	from urllib.parse import quote_plus
-	from http.server import BaseHTTPRequestHandler, HTTPServer
-	from socketserver import ThreadingMixIn
-except ImportError:
-	# py2
-	from urllib import quote_plus
-	from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
-	from SocketServer import ThreadingMixIn
+from urllib.parse import quote_plus
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from socketserver import ThreadingMixIn
 
 logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s [%(threadName)s@%(asctime)s]")
 
@@ -195,7 +188,7 @@ class Handler(BaseHTTPRequestHandler):
 			logging.debug("reusing editor for file: %s" % (filename,))
 			editor = EDITORS.get(filename, None)
 			if editor is None:
-				logging.warn("Could not find existing editor - creating new one for filename: %s", filename)
+				logging.warning("Could not find existing editor - creating new one for filename: %s", filename)
 
 		if editor is None:
 			filter = FILTERS.get_first(headers, contents)
@@ -271,6 +264,7 @@ class SocketInheritingHTTPServer(ThreadedHTTPServer):
 		if bind_and_activate:
 			# NOTE: systemd provides ready-bound sockets, so we only need to activate:
 			self.server_activate()
+
 
 def main():
 	global DELAY_IN_MINUTES, INCREMENTAL, OPEN_CMD, TEMP_DIR, FILTERS

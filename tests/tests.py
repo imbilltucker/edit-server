@@ -1,8 +1,6 @@
-try:
-	from http.client import HTTPConnection, OK
-except ImportError:
-	from httplib import HTTPConnection, OK
-import os, sys
+from http.client import HTTPConnection, OK
+import os
+import sys
 import subprocess
 import unittest
 import time
